@@ -1,0 +1,14 @@
+﻿@model InvestigatorReq.Models.Requisition
+@{
+    ViewBag.Title = "GetQuestions";
+}
+
+<h2>Req Questions</h2>
+<div>
+    @foreach (var question in Model.ReqQuestions)
+    {
+        Html.Raw(@question);
+        <p>@question</p>
+    }
+    <input type='text' placeholder='This is a test' />
+</div>

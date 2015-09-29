@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using InvestigatorReq.Models;
 
 namespace InvestigatorReq.Controllers
 {
@@ -18,10 +19,11 @@ namespace InvestigatorReq.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult test(string dealerID)
+        public ActionResult GetQuestions(string id)
         {
-            return Content("It works");
+            Requisition thisBeautifulReq = DAL.BuildFormElements("id");
+            
+            return View(thisBeautifulReq);
         }
 
         public ActionResult About()
