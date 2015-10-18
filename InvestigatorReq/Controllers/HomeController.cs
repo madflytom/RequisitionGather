@@ -21,7 +21,7 @@ namespace InvestigatorReq.Controllers
 
         public ActionResult GetQuestions(string id)
         {
-            Requisition thisBeautifulReq = DAL.BuildFormElements("id");
+            Requisition thisBeautifulReq = DAL.BuildFormElements(id);
             
             return View(thisBeautifulReq);
         }

@@ -21,4 +21,33 @@ input,
 select,
 textarea {
     max-width: 280px;
+    border-radius: 4px;
+    padding: 0.5em;
 }
+
+
+.datefield { 
+    display: inline; 
+    padding: 0.5em; 
+    border: inset 1px #CCC; 
+    background: #FFF; 
+    border-radius: 4px;
+    color: #666;
+    width: 400px;
+}
+
+.datefield * { 
+    display: inline-block;
+}
+
+.datefield input { 
+    width: 2.5em; 
+    padding: 0 0.4em; 
+    border: none; 
+    font-size: 100%; 
+    background: none;
+    color: #000;            
+}
+
+.datefield input#year { width:3.5em; }
+.datefield input:focus { outline:none; }

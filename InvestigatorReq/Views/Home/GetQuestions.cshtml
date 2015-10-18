@@ -3,12 +3,17 @@
     ViewBag.Title = "GetQuestions";
 }
 
-<h2>Req Questions</h2>
-<div>
-    @foreach (var question in Model.ReqQuestions)
-    {
-        Html.Raw(@question);
-        <p>@question</p>
-    }
-    <input type='text' placeholder='This is a test' />
-</div>
+<h2>Accession number: @Model.AccessionID</h2>
+<h3>Visit Information Requisition Form</h3>
+<form id="req">
+    <div>
+        @foreach (var question in Model.ReqQuestions)
+        {
+            HtmlString questionHTML = new HtmlString(@question);
+            <p>@questionHTML</p>
+        }
+    </div>
+    <div>
+        <input type="submit" title="Submit Req" />
+    </div>
+</form>

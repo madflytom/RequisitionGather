@@ -8,7 +8,7 @@ namespace InvestigatorReq.Models
 {
     public class Requisition
     {
-        public String AccessionID { get; set; }
+        public string AccessionID { get; set; }
         [AllowHtml]
         public List<string> ReqQuestions { get; set; }
 
