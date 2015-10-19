@@ -3,17 +3,84 @@
     ViewBag.Title = "GetQuestions";
 }
 
-<h2>Accession number: @Model.AccessionID</h2>
 <h3>Visit Information Requisition Form</h3>
-<form id="req">
-    <div>
-        @foreach (var question in Model.ReqQuestions)
-        {
-            HtmlString questionHTML = new HtmlString(@question);
-            <p>@questionHTML</p>
-        }
+<div id="accInfo" class="panel panel-primary">
+    <div class="panel-heading">
+        <strong>Accession number: @Model.AccessionID</strong>
     </div>
-    <div>
-        <input type="submit" title="Submit Req" />
+    <div class="panel-body">
+        <p>@Model.Investigator</p>
+        <p>@Model.ProjectID</p>
+        <p>@Model.Sponsor</p>
+        <p>@Model.VisitDescription</p>
+    </div>
+</div>
+<form id="req">
+    <div id="accInfo" class="panel panel-primary">
+        <div class="panel-heading">
+            <strong>Requisition Questions</strong>
+        </div>
+        <div class="panel-body">
+            <div>
+                @foreach (var question in Model.ReqQuestions)
+                {
+                    HtmlString questionHTML = new HtmlString(@question);
+                    <p>@questionHTML</p>
+                }
+            </div>
+
+            <div>
+                <input type="button" id="submitButton" title="Submit Req" value="Submit" />
+            </div>
+        </div>
     </div>
 </form>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#req').on('click', '#submitButton', function () {
+                //form submission code - create a JSON object to pass into the controller
+                var requisitionObjects = {
+                    AccessionID: '@Model.AccessionID',
+                    ProjectID: '@Model.ProjectID',
+                    Sponsor: '@Model.Sponsor',
+                    Investigator: '@Model.Investigator',
+                    VisitDescription: '@Model.VisitDescription',
+                    formObjects: []
+                };
+                //loop through the input objects, add them to the formObjects array insie the requisitionsObjects JSON object
+                $('#req *').filter(':input').each(function () {
+                    if($(this).attr('id')!="submitButton"){
+                        var elementObject = new Object();
+                        
+                        elementObject.id = $(this).attr('id');
+                        elementObject.value = $(this).val();
+                        requisitionObjects.formObjects.push(elementObject);
+                    }
+                });
+                //for debugging, to view the object in browser console
+                console.log(requisitionObjects);
+
+                // TODO: Ajax stubbed out to pass objects to controller to be parsed into workable DAL objects.  More work to be done here.
+                //$.ajax({
+                //    type: 'POST',
+                //    url: '/Home/FormSubmission/',
+                //    dataType: 'json',
+                //    data: {
+                //        requisitionObjects
+                //    },
+                //    success: function (data) {
+                //        alert('im back');
+                //        console.log(data);
+                //    },
+                //    error: function (xhr, ajaxOptions, error) {
+                //        alert(xhr.status);
+                //        alert('Error: ' + xhr.responseText);
+                //    }
+                //});
+            });
+        });
+
+    </script>
+}

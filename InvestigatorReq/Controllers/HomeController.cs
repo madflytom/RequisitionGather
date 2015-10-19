@@ -19,6 +19,11 @@ namespace InvestigatorReq.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult FormSubmission(Object formObjects) {
+            return Json(new { data = formObjects });
+        }
+
         public ActionResult GetQuestions(string id)
         {
             Requisition thisBeautifulReq = DAL.BuildFormElements(id);
