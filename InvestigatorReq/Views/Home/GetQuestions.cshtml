@@ -30,7 +30,7 @@
             </div>
 
             <div>
-                <input type="button" id="submitButton" title="Submit Req" value="Submit" />
+                <input type="submit" id="submitButton" title="Submit Req" value="Submit" />
             </div>
         </div>
     </div>
@@ -58,47 +58,52 @@
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#req').on('click', '#submitButton', function () {
-                //form submission code - create a JSON object to pass into the controller
-                var requisitionObjects = {
-                    AccessionID: '@Model.AccessionID',
-                    ProjectID: '@Model.ProjectID',
-                    Sponsor: '@Model.Sponsor',
-                    Investigator: '@Model.Investigator',
-                    VisitDescription: '@Model.VisitDescription',
-                    formObjects: []
-                };
-                //loop through the input objects, add them to the formObjects array insie the requisitionsObjects JSON object
-                $('#req *').filter(':input').each(function () {
-                    if($(this).attr('id')!="submitButton"){
-                        var elementObject = new Object();
+            $('#req').on('submit', function (e) {
+                e.preventDefault();
+                var form = $("#req");
+                form.validate();
+                if(form.valid()){
+                    //form submission code - create a JSON object to pass into the controller
+                    var requisitionObjects = {
+                        AccessionID: '@Model.AccessionID',
+                        ProjectID: '@Model.ProjectID',
+                        Sponsor: '@Model.Sponsor',
+                        Investigator: '@Model.Investigator',
+                        VisitDescription: '@Model.VisitDescription',
+                        formObjects: []
+                    };
+                    //loop through the input objects, add them to the formObjects array insie the requisitionsObjects JSON object
+                    $('#req *').filter(':input').each(function () {
+                        if($(this).attr('id')!="submitButton"){
+                            var elementObject = new Object();
                         
-                        elementObject.id = $(this).attr('id');
-                        elementObject.value = $(this).val();
-                        requisitionObjects.formObjects.push(elementObject);
-                    }
-                });
-                //for debugging, to view the object in browser console
-                console.log(requisitionObjects);
-                $('#successModal').modal('show');
-                // TODO: Ajax stubbed out to pass objects to controller to be parsed into workable DAL objects.  More work to be done here.
-                //$.ajax({
-                //    type: 'POST',
-                //    url: '/Home/FormSubmission/',
-                //    dataType: 'json',
-                //    data: {
-                //        requisitionObjects
-                //    },
-                //    success: function (data) {
-                //        alert('im back');
-                //        console.log(data);
-                //    },
-                //    error: function (xhr, ajaxOptions, error) {
-                //        alert(xhr.status);
-                //        alert('Error: ' + xhr.responseText);
-                //    }
-                //});
-            });
+                            elementObject.id = $(this).attr('id');
+                            elementObject.value = $(this).val();
+                            requisitionObjects.formObjects.push(elementObject);
+                        }
+                    });
+                    //for debugging, to view the object in browser console
+                    console.log(requisitionObjects);
+                    $('#successModal').modal('show');
+                    // TODO: Ajax stubbed out to pass objects to controller to be parsed into workable DAL objects.  More work to be done here.
+                    //$.ajax({
+                    //    type: 'POST',
+                    //    url: '/Home/FormSubmission/',
+                    //    dataType: 'json',
+                    //    data: {
+                    //        requisitionObjects
+                    //    },
+                    //    success: function (data) {
+                    //        alert('im back');
+                    //        console.log(data);
+                    //    },
+                    //    error: function (xhr, ajaxOptions, error) {
+                    //        alert(xhr.status);
+                    //        alert('Error: ' + xhr.responseText);
+                    //    }
+                    //});
+                }
+            })
         });
 
     </script>
